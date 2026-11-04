@@ -7,7 +7,15 @@ class PessoaService{
         //SELECT * FROM pessoas
         const pessoas = await prisma.pessoa.findMany({
             skip: (page-1)*pageSize,
-            take: Number(pageSize)
+            take: Number(pageSize),
+            include:{
+                usuario:{
+                    select:{
+                        email:true,
+                        role:true
+                    }
+                }
+            }
         });
         return pessoas;
     }
